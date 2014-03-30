@@ -10,70 +10,70 @@ $(document).ready(function(){
         $('#searchbox').select();
     });
     //auto type, fade out, select cursor 
-    autotype("Hey.", 1500, 80);
-    // autotype("It's election day! Ask me questions.", 1500, 80);   
+    // autotype("Hey.", 1500, 80);
+    autotype("It's election day! Ask me questions.", 1500, 80);   
     handleAnswer(answer, "none");
 
 });
     // swing states
-   function swing_states_graphic() {   
-    $.getJSON("http://ec2-184-73-124-192.compute-1.amazonaws.com/jsonp/results?callback=?", function(data) {
-        var data_Romney = [data.state.CO.race_code.PR.race_candidate_id.PR0800002.votes_total,
-                           data.state.FL.race_code.PR.race_candidate_id.PR1200002.votes_total,
-                           data.state.OH.race_code.PR.race_candidate_id.PR3900002.votes_total,
-                           data.state.VA.race_code.PR.race_candidate_id.PR5100002.votes_total];        
-        var data_Obama = [data.state.CO.race_code.PR.race_candidate_id.PR0800001.votes_total,
-                           data.state.FL.race_code.PR.race_candidate_id.PR1200001.votes_total,
-                           data.state.OH.race_code.PR.race_candidate_id.PR3900001.votes_total,
-                           data.state.VA.race_code.PR.race_candidate_id.PR5100001.votes_total];         
-        $('#results').highcharts({      
-            chart: { type: 'bar' },
-            title: { text: 'Swing States' },            
-            xAxis: { categories: ['Colorado', 'Florida', 'Ohio', 'Virginia'] },
-            yAxis: { min: 0, title: { text: '' } },
+    function swing_states_graphic() {   
+        $.getJSON("http://ec2-184-73-124-192.compute-1.amazonaws.com/jsonp/results?callback=?", function(data) {
+            var data_Romney = [data.state.CO.race_code.PR.race_candidate_id.PR0800002.votes_total,
+            data.state.FL.race_code.PR.race_candidate_id.PR1200002.votes_total,
+            data.state.OH.race_code.PR.race_candidate_id.PR3900002.votes_total,
+            data.state.VA.race_code.PR.race_candidate_id.PR5100002.votes_total];        
+            var data_Obama = [data.state.CO.race_code.PR.race_candidate_id.PR0800001.votes_total,
+            data.state.FL.race_code.PR.race_candidate_id.PR1200001.votes_total,
+            data.state.OH.race_code.PR.race_candidate_id.PR3900001.votes_total,
+            data.state.VA.race_code.PR.race_candidate_id.PR5100001.votes_total];         
+            $('#results').highcharts({      
+                chart: { type: 'bar' },
+                title: { text: 'Swing States' },            
+                xAxis: { categories: ['Colorado', 'Florida', 'Ohio', 'Virginia'] },
+                yAxis: { min: 0, title: { text: '' } },
 
-            legend: { backgroundColor: '#FFFFFF', reversed: true },
-            plotOptions: {
-                series: { stacking: 'normal'} },
-                series: [{
-                name: 'Romney',
-                data: data_Romney,
-                color: '#FF1919'
-                     
-            }, {
-                name: 'Obama',
-                data: data_Obama,
-                color: '#3333CC'
-            }]
+                legend: { backgroundColor: '#FFFFFF', reversed: true },
+                plotOptions: {
+                    series: { stacking: 'normal'} },
+                    series: [{
+                        name: 'Romney',
+                        data: data_Romney,
+                        color: '#FF1919'
+
+                    }, {
+                        name: 'Obama',
+                        data: data_Obama,
+                        color: '#3333CC'
+                    }]
+                });
         });
-        });
-    }
+}
 
 // migratory information 
-    function migratory_info(){
-        $('#results').highcharts({
-            chart: {type: 'bar' },
-            title: {text: 'Key Demographic Groups' },
-            xAxis: {categories: ['Independents', 'Hispanics', 'Youth', 'Women'] },
-            yAxis: {min: 0 ,title: {text: ''} },
-            legend: { backgroundColor: '#FFFFFF', reversed: true },
-            plotOptions: {
-                series: {
-                    stacking: 'normal'
-                }
-            },
-                series: [{
-                name: 'Romney',
-                data: [5, 10, 20, 4],
-                color: '#FF1919'
-                     
-            }, {
-                name: 'Obama',
-                data: [55, 70, 60, 3],
-                color: '#3333CC'
-            }]
-        });
-    }
+function migratory_info(){
+    $('#results').highcharts({
+        chart: {type: 'bar' },
+        title: {text: 'Key Demographic Groups' },
+        xAxis: {categories: ['Independents', 'Hispanics', 'Youth', 'Women'] },
+        yAxis: {min: 0 ,title: {text: ''} },
+        legend: { backgroundColor: '#FFFFFF', reversed: true },
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+        series: [{
+            name: 'Romney',
+            data: [5, 10, 20, 4],
+            color: '#FF1919'
+
+        }, {
+            name: 'Obama',
+            data: [55, 70, 60, 3],
+            color: '#3333CC'
+        }]
+    });
+}
 
 function handleAnswer(answer_func, answer_type) { //capturing the enter
     $("#searchbox").keypress(function(e) {
@@ -89,8 +89,8 @@ function autotype(txt, fadeTime, delay){
     txt= txt.split('');
     for ( i=0; i<txt.length;i++){   
         setTimeout(function(){        
-            $('#searchbox').val( $('#searchbox').val() + txt.shift())
-        }, delay * i)       
+            $('#searchbox').val( $('#searchbox').val() + txt.shift());
+        }, delay * i);       
     }
     fadeAndFocus(txt, fadeTime, delay, 3);
 }
@@ -108,23 +108,23 @@ function fadeAndFocus(txt, fadeTime, delay, addNum){
     }, (delay*(txt.length + addNum)) + fadeTime);
 }
 
-function removeAnswer(){    
+function removeAnswer(){
     $("#results").empty();
 }
 
-function entertext(answer) {    
+function entertext(answer) {
     $("#results").append("<h1>" + answer + "</h1>");
 }
 
 function answer(question, type) {    
     // FUNSIES DEMO
-    if (question == "who's the prettiest?") { entertext("YOU ARE");};
-    if (question == "who's the prettiest now?") { entertext("STILL YOU"); };
+    if (question == "who's the prettiest?") { entertext("YOU ARE");}
+    if (question == "who's the prettiest now?") { entertext("STILL YOU"); }
     if (type == "none") {        
         if (question.match(/^is\s\w*\swinning(\?)*$/)) {     
             var name = question.replace("is", "").replace("winning?", "");            
             getCandidateResults(name);
-        };
+        }
         if (question.match(/^who's\swinning\sin\s\my\s(...)$/)) {        
             getUserState('presidential');
         }
@@ -137,10 +137,11 @@ function answer(question, type) {
                 getUserState('congress');
             }
         }
-        if (question.match(/^(.*\s*)*who\sis\s(\w*)(\?)*$/)) {
+        if (question.match(/^(.*\s*)*who\sis\s(\w*\s*)+(\?)*$/)) {
             console.log("match");
-            var name = question.replace(/(.*\s*)*(?=who\sis\s)/, "").replace("who is", "").replace("?", "");
-            console.log(name);
+            var canName = question.replace(/(.*\s*)*(?=who\sis\s)/, "").replace("who is", "").replace("?", "");
+            console.log(canName);
+            getCandidateInfo(canName);
         }      
     }
 }
@@ -151,7 +152,22 @@ function getUserState(question_type) {
     handleAnswer(answerState, question_type);
 }
 
-function answerState(answer, type) {
+function getCandidateInfo(name) {
+    console.log(name + " getCandidateInfo");
+    $.getJSON("races.json", function(data) {
+        console.log(data);
+        $.each(data, function(key, val) {
+            console.log("matched name");
+            if (data[key].Candidate.indexOf(name)) {
+                console.log("equals");
+                entertext(name + " is a " + data[key].Party + " Congressional candidate from " + data[key].State + ".");
+                return false;
+            };
+        });
+    });
+}
+
+  function answerState(answer, type) {
     console.log("hello");    
     if (answer.match(/^\w\w$/)){
         if (type == "presidential") {
@@ -172,13 +188,13 @@ function getCandidateResultsByState(state){
         for(k in data.state[state].race_code.PR.race_candidate_id){
             totalVotes += data.state[state].race_code.PR.race_candidate_id[k]['votes_total'];
         }
-                
+
         for(k in data.state[state].race_code.PR.race_candidate_id){         
             votesHash[data.state[state].race_code.PR.race_candidate_id[k]['name']] = data.state[state].race_code.PR.race_candidate_id[k]['votes_total'];
             entertext(data.state[state].race_code.PR.race_candidate_id[k]['name'] + ' -- ' 
                 + ((data.state[state].race_code.PR.race_candidate_id[k]['votes_total']/totalVotes)*100).toFixed(2) + "%");
         }
-                
+
     });
 }
 
@@ -205,7 +221,7 @@ function getCandidateResults(candidate_name) {
         }                
 
         if(totalVotesHash[candidate_name] == maxVotes){
-            entertext("YES!")
+            entertext("YES!");
             entertext(candidate_name + " is winning with " + ((totalVotesHash[candidate_name]/totalVoteNumber)*100).toFixed(2) + '% of the vote');
         }
         else if(totalVotesHash[candidate_name] < maxVotes){
@@ -216,14 +232,14 @@ function getCandidateResults(candidate_name) {
         }
         else{
             entertext(
-                'Something was misspelled. Try again.')
+                'Something was misspelled. Try again.');
         }
     });                 
-    showMoreButton("candidates");
+showMoreButton("candidates");
 }
 
 function showMoreButton (type_of_show) {    
-    $("body").append("<input id='more_results' type='button' value='Gimmme gimme more!''>");
+    $("body").append("<a href='#' id='more_results' class='center'>Tell me more!</a>");
     $("#more_results").click(function() {
         if (type_of_show == "candidates"){
             swing_states_graphic();
