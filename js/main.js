@@ -7,17 +7,22 @@ $(document).ready(function(){
         $('#searchbox').select();
     });
     //auto type, fade out, select cursor 
-    autotype("It's election day! Ask me questions.", 1500, 80);
+    autotype("Hallo.", 1500, 80);
+    // autotype("It's election day! Ask me questions.", 1500, 80);
     //capturing the enter
     var query_type = "/state/NY";
+    handleAnswer(answer, "none");
+});
+
+function handleAnswer(answer_func, answer_type) {
     $("#searchbox").keypress(function(e) {
         removeAnswer();
         if (e.which == "13"){
-            answer($(this).val())
+            answer_func($(this).val(), answer_type);                
             fadeAndFocus($(this).val(), 1500, 4, 3);
         }
-    })
-});
+    });
+}
 
 function autotype(txt, fadeTime, delay){
     txt= txt.split('');
@@ -51,39 +56,53 @@ function entertext(answer) {
     $("#results").append("<h1>" + answer + "</h1>");
 }
 
-function answer(question) {
+function answer(question, type) {
     console.log('went into answer')
     // FUNSIES DEMO
-    if (question == "who's the prettiest?") {
-        entertext("YOU ARE");          
-    };
-    if (question == "who's the prettiest now?") {
-        entertext("STILL YOU");
-    };        
-    if (question.match(/^is\s\w*\swinning\?$/)) {     
-        var name = question.replace("is", "").replace("winning?", "");            
-        getCandidateResults(name);
-    };
-    if (question.match(/^who's\swinning\sin\s\my\s(...)$/)) {
-        console.log("lol state");
-        setTimeout(function(){autotype('What state do you live in?', 1500, 80)}, 2000);
-    }
-    if(question.match(/^\w\w$/)){
-        getCandidateResultsByState(question);
-    }
-    if (question.match(/^who's\srunning\sfor\s(\w*)$/)) {
-        console.log("matched");
-        var position = question.replace("who's", "").replace("running for", "").replace("?","");
-        console.log(position);
-        if (position.toLowerCase() == "senate") {
-            console.log("lol senate");
+    if (question == "who's the prettiest?") { entertext("YOU ARE");};
+    if (question == "who's the prettiest now?") { entertext("STILL YOU"); };
+    if (type == "none") {        
+        if (question.match(/^is\s\w*\swinning(\?)*$/)) {     
+            var name = question.replace("is", "").replace("winning?", "");            
+            getCandidateResults(name);
+        };
+        if (question.match(/^who's\swinning\sin\s\my\s(...)$/)) {        
+            getUserState('presidential');
         }
-        else if (position.toLowerCase() == "congress" || position.toLowerCase() == "representative") {
-            console.log("lol congress");
+        if (question.match(/^who's\srunning\sfor\s(\w*)(\?)*$/)) {
+            console.log("matched");
+            var position = question.replace("who's", "").replace("running for", "").replace("?","");
+            console.log(position);
+            if (position == "senate") {
+                console.log("lol senate");
+                getUserState('senate');
+            }
+            else if ((position == "congress") || (position == "representative")) {
+                console.log("lol congress");
+                getUserState('congress');
+            }
         }
     }
 }
 
+function getUserState(question_type) {
+    setTimeout(function(){autotype('What state do you live in?', 1500, 80)}, 2000);
+    handleAnswer(answerState, question_type);
+}
+
+function answerState(answer, type) {    
+    if (answer.match(/^\w\w$/)){
+        if (type == "presidential") {
+            getCandidateResultsByState(answer);
+        }
+        else if (type == "senate"){
+            console.log("getCandidateResults by senate");
+        }
+        else if (type == "congress"){
+            console.log("getCandidateResults by congress");
+        }
+    }
+}
 function getCandidateResultsByState(state){
     $.getJSON("http://ec2-184-73-124-192.compute-1.amazonaws.com/jsonp/results?callback=?", function(data) {
         console.log(data);
@@ -106,8 +125,7 @@ function getCandidateResultsByState(state){
 
 function getCandidateResults(candidate_name) {
     candidate_name = candidate_name.replace(/ /g,'');
-    // 1. iterate through json, get the results for the candidate for each state
-    // http://echo.jsontest.com/key/value/one/two
+
     $.getJSON("http://ec2-184-73-124-192.compute-1.amazonaws.com/jsonp/results?callback=?", function(data) {
         totalVotesHash = {}
         // console.log(data);
@@ -145,7 +163,6 @@ function getCandidateResults(candidate_name) {
             entertext(
                 'Something was misspelled. Try again.')
         }
-        // console.log(m)
-        // console.log(totalVotesHash);
+
     });                 
 }
