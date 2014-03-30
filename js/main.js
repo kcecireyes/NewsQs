@@ -86,6 +86,7 @@ function handleAnswer(answer_func, answer_type) { //capturing the enter
 }
 
 function autotype(txt, fadeTime, delay){
+    console.log("autotype");
     txt= txt.split('');
     for ( i=0; i<txt.length;i++){   
         setTimeout(function(){        
@@ -112,7 +113,7 @@ function removeAnswer(){
     $("#results").empty();
 }
 
-function entertext(answer) {
+function entertext(answer) {    
     $("#results").append("<h1>" + answer + "</h1>");
 }
 
@@ -148,7 +149,9 @@ function answer(question, type) {
 
 function getUserState(question_type) {
     console.log("getUserState");
-    setTimeout(function(){ autotype('What state do you live in?', 1500, 80)}, 2000);
+    setTimeout(function(){ 
+        autotype('What state do you live in?', 1500, 80)}
+        , 3000);
     handleAnswer(answerState, question_type);
 }
 
@@ -162,9 +165,22 @@ function getCandidateInfo(name) {
                 console.log("equals");
                 entertext(name + " is a " + data[key].Party + " Congressional candidate from " + data[key].State + ".");
                 return false;
-            };
-        });
+            };            
+        });       
+        setTimeout(
+            function() 
+            {
+                knowMore("You probably wanna know more, right?");
+                name= name.split(' ');
+                $("h1").remove();
+                var string = 'http://www.nydailynews.com/search-results/search-results-7.113?q='+ '' + name[1] + '+'+ ''+ name[2]+'&selecturl=site';
+                $("<a target='_blank' href="+ string +"> More info! </a>").appendTo("body");                
+            }, 3500);
     });
+}
+
+function knowMore(text) {
+    autotype(text, 3500,80);
 }
 
   function answerState(answer, type) {
