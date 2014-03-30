@@ -1,6 +1,6 @@
 $(document).ready(function(){
     //implement autogrow of the textbox
-    $('#searchbox').autogrow();
+    $('#searchbox').autosize();
 
     $('#searchbox').blur(function(){
         $('#searchbox').focus();
@@ -8,13 +8,14 @@ $(document).ready(function(){
     });
     //auto type, fade out, select cursor 
     autotype("Hallo.", 1500, 80);
-    // autotype("It's election day! Ask me questions.", 1500, 80);
-    //capturing the enter
-    var query_type = "/state/NY";
+    // autotype("It's election day! Ask me questions.", 1500, 80);   
     handleAnswer(answer, "none");
+    // $("#more_results").click(function(){
+    //     $(this).append("<img src=Logo.svg>");
+    // });
 });
 
-function handleAnswer(answer_func, answer_type) {
+function handleAnswer(answer_func, answer_type) { //capturing the enter
     $("#searchbox").keypress(function(e) {
         removeAnswer();
         if (e.which == "13"){
@@ -71,8 +72,8 @@ function answer(question, type) {
         }
         if (question.match(/^who's\srunning\sfor\s(\w*)(\?)*$/)) {
             console.log("matched");
-            var position = question.replace("who's", "").replace("running for", "").replace("?","");
-            console.log(position);
+            var position = question.replace("who's", "").replace("running for", "").replace("?","").replace(/\s+/g, "");
+            console.log(position + " this is the position");
             if (position == "senate") {
                 console.log("lol senate");
                 getUserState('senate');
