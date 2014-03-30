@@ -1,0 +1,21 @@
+#chatbox{
+    width: 50%;
+    height: 70%;
+    border: 1px solid red;
+}
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+#searchbox{
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 120px;
+    overflow:hidden;
+}
+#searchbox:focus, #searchbox:active{
+	color:#000;
+	outline:0;
+}
