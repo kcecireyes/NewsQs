@@ -1,6 +1,6 @@
-NewsQs
 EditorsLab Hack Day @ the New York Times
 March 29th, 2014
+NewsQs
 ======
 
 Hack Day Hack with lotsa hackiness 
