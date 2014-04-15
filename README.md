@@ -24,3 +24,7 @@ To host locally, on a Mac, run from your terminal:
 $ python -m SimpleHTTPServer [port number]
 
 Then navigate to localhost:[port number] in your browser
+
+OR
+
+visit http://newsq.herokuapp.com/
