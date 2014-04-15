@@ -1,0 +1,29 @@
+{
+  "name": "NewsQs",
+  "version": "0.0.0",
+  "description": "A simple AI to navigate a news site during election season",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kcecireyes/NewsQs.git"
+  },
+  "keywords": [
+    "news",
+    "ai",
+    "hack",
+    "election"
+  ],
+  "author": "Cecilia Reyes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kcecireyes/NewsQs/issues"
+  },
+  "homepage": "https://github.com/kcecireyes/NewsQs",
+  "dependencies": {
+    "logfmt": "^1.1.2",
+    "express": "^4.0.0"
+  }
+}

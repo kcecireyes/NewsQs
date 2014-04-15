@@ -121,12 +121,13 @@ function answer(question, type) {
     // FUNSIES DEMO
     if (question == "who's the prettiest?") { entertext("YOU ARE");}
     if (question == "who's the prettiest now?") { entertext("STILL YOU"); }
+    if (question == "what is the answer to the ultimate question") { entertext("Search deep within your soul"); }
     if (type == "none") {        
         if (question.match(/^is\s\w*\swinning(\?)*$/)) {     
             var name = question.replace("is", "").replace("winning?", "");            
             getCandidateResults(name);
         }
-        if (question.match(/^who's\swinning\sin\s\my\s(...)$/)) {        
+        if ((question.match(/^who's\swinning\sin\s\my\s(...)$/)) || question.match(/^who's\swinning\sin\s\my\s(...)$/)) {        
             getUserState('presidential');
         }
         if (question.match(/^who's\srunning\sfor\s(\w*)(\?)*$/)) {            
@@ -151,7 +152,7 @@ function getUserState(question_type) {
     console.log("getUserState");
     setTimeout(function(){ 
         autotype('What state do you live in?', 1500, 80)}
-        , 3000);
+        , 4000);
     handleAnswer(answerState, question_type);
 }
 
